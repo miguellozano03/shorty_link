@@ -35,3 +35,5 @@ migrations/
 *.pyc
 *.pyo
 *.pyd
+
+super_user.txt
