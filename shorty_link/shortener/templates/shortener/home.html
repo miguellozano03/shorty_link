@@ -1,31 +1,31 @@
 {% extends "shortener/base.html" %}
 {% load static %}
 {% block head %}
-
+<link rel="stylesheet" href="{% static 'shortener/css/home.css' %}">
 {% endblock head %}
 
 {% block content %}
 
-<div>
+<section class="shorty-container">
+  <div class="hero-text">
     <h1>Shrink Your Links, Share Instantly</h1>
     <p>Transform long URLs into clean, clickable links in seconds</p>
-</div>
-
-<div>
-  <form action="{% url 'shorten_link' %}" method="post" id="shorty-form" ="container-lg mx-auto">
-    {% csrf_token %}
-    <div>
-      <input type="url" id="form-input" placeholder="Paste URL, short and share" required>
-      <button type="submit">Shorten link</button>
-    </div>
-  </form>
-
-  <div id="result-container">
-    <p id="result"></p>
   </div>
-</div>
 
-</main>
+  <div class="form-container">
+    <form action="{% url 'shorten_link' %}" method="post" id="shorty-form" ="container-lg mx-auto">
+      {% csrf_token %}
+      <div class="form-wrapper">
+        <input type="url" id="form-input" placeholder="Paste URL, short and share" required>
+        <button type="submit">Shorten link</button>
+      </div>
+    </form>
+    <div id="result-container">
+      <p id="result"></p>
+    </div>
+  </div>
+</section>
+
 
 <script src="{% static 'shortener/js/formSubmit.js' %}" defer></script>
 {% endblock content %}

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,17 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ShortyLink - {% block title %}{% endblock title %}</title>
 
+  <link rel="stylesheet" href="{% static 'shortener/css/base.css' %}">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   {% block head %}{% endblock head %}
 </head>
 <body>
   <header>
-    <div>
+    <div class="header-logo">
       <h1 class="h3">Shorti.Link</h1>
-      </div>
-      <nav>
-          <a href="#" class="nav-btn">Sign in</a>
-          <a href="#" class="nav-btn">Get Started</a>
-      </nav>
+    </div>
+    <nav class="nav-bar">
+      <a href="#" class="nav-btn">Sign in</a>
+      <a href="#" class="nav-btn">Get Started</a>
+    </nav>
   </header>
   <main>
     {% block content %}
@@ -24,10 +29,15 @@
   </main>
   <footer>
     <div class="contact-links">
-      <span>Linkedin</span>
-      <span>Instagram</span>
-      <span>Fiverr</span>
-      <span>Repository</span>
+      <a href="https://github.com/miguellozano03" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/lozano-miguel" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-linkedin"></i>
+      </a>
+      <a href="https://github.com/miguellozano03/shorty_link" target="_blank" rel="noopener noreferrer">
+        <i class="fa-solid fa-file-code"></i>
+      </a>
     </div>
     <p>Created by Miguel Lozano</p>
   </footer>
