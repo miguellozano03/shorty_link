@@ -1,6 +1,9 @@
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 
+from dotenv import load_dotenv
+import os
+
 import base62
 import uuid
 
@@ -9,7 +12,12 @@ def generate_short_code():
     shorten_url = base62.encode(random_uiid)
     return shorten_url[:7]
 
-def build_short_url(code, prefix: str = 'localhost:8000'):
+
+PREFIX = os.environ.get('PREFIX')
+
+def build_short_url(code, prefix= None):
+    if prefix is None:
+        prefix = PREFIX
     return f'http://{prefix}/{code}'
 
 def valitate_url(url):
