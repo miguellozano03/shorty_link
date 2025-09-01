@@ -1,18 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShortyLink</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShortyLink - {% block title %}{% endblock title %}</title>
+
+  {% block head %}{% endblock head %}
 </head>
 <body>
-    <header>
-        <div class="left">
-            <h1>Shorti.Link</h1>
-        </div>
-    </header>
+  <header>
+    <div>
+      <h1 class="h3">Shorti.Link</h1>
+      </div>
+      <nav>
+          <a href="#" class="nav-btn">Sign in</a>
+          <a href="#" class="nav-btn">Get Started</a>
+      </nav>
+  </header>
+  <main>
     {% block content %}
 
     {% endblock %}
+  </main>
+  <footer>
+    <div class="contact-links">
+      <span>Linkedin</span>
+      <span>Instagram</span>
+      <span>Fiverr</span>
+      <span>Repository</span>
+    </div>
+    <p>Created by Miguel Lozano</p>
+  </footer>
 </body>
 </html>
