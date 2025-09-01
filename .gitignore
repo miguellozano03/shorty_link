@@ -15,7 +15,7 @@ env/
 
 # SQLite database
 *.db
-.sqlite3
+*.sqlite3
 
 # Migrations
 migrations/
