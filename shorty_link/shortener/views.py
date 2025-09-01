@@ -1,3 +1,4 @@
+import json
 from .models import Url
 from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect
@@ -7,8 +8,9 @@ def home_view(request):
     return render(request, "shortener/home.html")
 
 def generate_short(request):
-    if request.method == 'GET':
-        long_url = request.GET.get('long_url')
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        long_url = data.get('url')
 
         if not long_url:
             return JsonResponse({"error": "No URL provided"}, status=400)
