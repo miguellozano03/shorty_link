@@ -7,6 +7,10 @@ import os
 import base62
 import uuid
 
+if os.environ.get('ENV') != 'PRODUCTION':
+    from dotenv import load_dotenv
+    load_dotenv()
+
 def generate_short_code():
     random_uiid = uuid.uuid4().int
     shorten_url = base62.encode(random_uiid)
@@ -15,7 +19,7 @@ def generate_short_code():
 
 PREFIX = os.environ.get('PREFIX')
 
-def build_short_url(code, prefix= None):
+def build_short_url(code, prefix= 'shorty-link.onrender'):
     if prefix is None:
         prefix = PREFIX
     return f'http://{prefix}/{code}'
