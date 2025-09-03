@@ -6,6 +6,9 @@
   justify-content: center;
   width: 100%;
   gap: 20px;
+  background-color: #121212; /* fondo dark */
+  color: #e0e0e0; /* texto claro */
+  padding: 1rem;
 }
 
 .hero-text {
@@ -14,25 +17,25 @@
 
 .hero-text p {
   font-size: 20px;  
+  color: #e0e0e0;
 }
 
 .form-container {
-  padding: 0.5rem;
   width: 100%;
 }
 
 #shorty-form {
   display: flex;
-  justify-content: center;      /* centra el div hijo */
+  justify-content: center;
   width: 100%;
 }
 
 .form-wrapper {
-  width: 90%;                   
-  max-width: 700px;             
+  width: 90%;
+  max-width: 700px;
   display: flex;
   flex-direction: column;
-  gap: 15px;                    
+  gap: 15px;
 }
 
 /* Input y botón ocupan todo el ancho del div */
@@ -43,28 +46,79 @@
   border-radius: 8px;
   border: 1px solid #ccc;
   box-sizing: border-box;
+  padding: 0 10px;
+}
+
+#form-input {
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+  border: 1px solid #333;
 }
 
 #shorty-form button {
   border: none;
-  background-color: #007bff;
-  color: white;
+  background-color: #ff5722; /* acento vibrante */
+  color: #fff;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+#shorty-form button:hover {
+  background-color: #e64a19;
+  transform: translateY(-2px);
 }
 
 #result-container {
   display: flex;
+  opacity: 0;
+  visibility: hidden;
   justify-content: center;
+  align-items: center;
   padding-top: 20px;
-  height: 100px;
+  min-height: 100px;
+  width: 100%;
 }
+
+#result-container.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+#result {
+  background-color: #1f1f1f; 
+  color: #e0e0e0;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  padding: 10px 20px 10px 20px;
+  font-size: 18px;
+  font-weight: 500;
+  max-width: 700px;
+  word-break: break-all;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: all 0.2s ease-in-out;
+}
+
+#result a {
+  color: #ff5722; /* acento vibrante */
+  text-decoration: underline;
+}
+
+#result.error {
+  background-color: #b71c1c; /* rojo suave para errores */
+  color: #fff;
+}
+
+
+
+
+
 
 @media screen and (min-width: 992px) {
   .form-wrapper {
-    display: flex;
     flex-direction: row;
-    width: 90%;
-    max-width: 700px;
     gap: 0;
   }
 

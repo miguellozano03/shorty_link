@@ -22,7 +22,18 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const data = await response.json();
 
-        shortUrlContainer.innerHTML = data.error ? `Error: ${data.error}` : `Your url: ${data.short_url}`;
+        shortUrlContainer.innerHTML = data.error ? `Error: ${data.error}` : `Your url: <a href="${data.short_url}" target="_blank">${data.short_url}</a>`;
+
+
+        const resultContainer = document.getElementById('result-container');
+
+        if (data.error || data.short_url) {
+            resultContainer.classList.add('show');
+        } else {
+          resultContainer.classList.remove('show');
+        }
+
+        shortUrlContainer.className = data.error ? 'error' : '';
         
     })
 

@@ -13,6 +13,8 @@ body {
     "main"
     "footer";
   padding: 1rem 1.5rem 0 1rem;
+  background-color: #121212;
+  color: #e0e0e0;
 }
 
 header {
@@ -27,9 +29,24 @@ header {
   gap: 1.5rem;
 }
 
-.nav-bar a {
+.nav-btn {
+  background-color: #ff5722; /* acento naranja */
+  color: #fff;
   text-decoration: none;
-  color:black;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+  display: inline-block;
+}
+
+.nav-btn:hover {
+  background-color: #e64a19; /* naranja más intenso */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
 }
 
 main {
@@ -43,9 +60,8 @@ footer {
   align-items: center;
 }
 
-
 footer a {
-  font-size: 2.5rem;
+  font-size: 2rem;
   text-decoration: none;
-  color: black;
+  color: #ff5722;
 }
