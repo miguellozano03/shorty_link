@@ -1,30 +1,20 @@
+import os
+import uuid
+import base62
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 
-from dotenv import load_dotenv
-import os
-
-import base62
-import uuid
-
-if os.environ.get('ENV') != 'PRODUCTION':
-    from dotenv import load_dotenv
-    load_dotenv()
+ENV = os.environ.get('ENV', 'DEV')
+PREFIX = os.environ.get('PREFIX', 'shorty-link.onrender.com')  # default por si acaso
 
 def generate_short_code():
-    random_uiid = uuid.uuid4().int
-    shorten_url = base62.encode(random_uiid)
-    return shorten_url[:7]
+    random_uuid = uuid.uuid4().int
+    return base62.encode(random_uuid)[:7]
 
+def build_short_url(code):
+    return f'https://{PREFIX}/{code}'
 
-PREFIX = os.environ.get('PREFIX')
-
-def build_short_url(code, prefix= 'shorty-link.onrender'):
-    if prefix is None:
-        prefix = PREFIX
-    return f'http://{prefix}/{code}'
-
-def valitate_url(url):
+def validate_url(url):
     validate = URLValidator()
     try:
         validate(url)

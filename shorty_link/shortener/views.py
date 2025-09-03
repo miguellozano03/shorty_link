@@ -2,7 +2,7 @@ import json
 from .models import Url
 from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect
-from .utils import build_short_url,generate_short_code , valitate_url
+from .utils import build_short_url,generate_short_code , validate_url
 
 def home_view(request):
     return render(request, "shortener/home.html")
@@ -15,7 +15,7 @@ def generate_short(request):
         if not long_url:
             return JsonResponse({"error": "No URL provided"}, status=400)
     
-        if not valitate_url(long_url):
+        if not validate_url(long_url):
             return JsonResponse({"error": "The URL is invalid"}, status=400)
         
         code = generate_short_code()
