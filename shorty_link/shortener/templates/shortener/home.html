@@ -16,7 +16,7 @@
   </div>
 
   <div class="form-container">
-    <form action="{% url 'shorten_link' %}" method="post" id="shorty-form" ="container-lg mx-auto">
+    <form action="{% url 'shorten_link' %}" method="post" id="shorty-form">
       {% csrf_token %}
       <div class="form-wrapper">
         <input type="url" id="form-input" placeholder="Paste URL, short and share" required>

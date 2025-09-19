@@ -9,22 +9,27 @@ def home_view(request):
 
 def generate_short(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        long_url = data.get('url')
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON"}, status=400)
 
+        long_url = data.get('url')
         if not long_url:
             return JsonResponse({"error": "No URL provided"}, status=400)
-    
+
         if not valitate_url(long_url):
             return JsonResponse({"error": "The URL is invalid"}, status=400)
-        
+
         code = generate_short_code()
         while Url.objects.filter(short_url=code).exists():
             code = generate_short_code()
 
         Url.objects.create(long_url=long_url, short_url=code)
         return JsonResponse({"short_url": build_short_url(code)})
+
     return JsonResponse({"error": "Method not allowed"}, status=405)
+
 
 
 def redirect_url(request, short_code):
