@@ -1,3 +1,5 @@
+@import url("./variables.css");
+
 html,
 body {
   min-height: 100%;
@@ -7,8 +9,8 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: darkslateblue;
-  color: aliceblue;
+  background-color: var(--color-dark);
+  color: var(--color-text);
   padding: 0rem 1rem 0 1rem;
 }
 
@@ -41,7 +43,7 @@ header {
   font-size: 1.75rem;
   font-weight: 900;
   text-decoration: none;
-  color: orangered;
+  color: var(--color-primary);
 }
 
 .navbar {
@@ -57,7 +59,7 @@ header {
   padding: 6rem 2rem;
   gap: 1.5rem;
   list-style: none;
-  background-color: whitesmoke;
+  background-color: var(--color-text);
 
   transition: right 0.5s ease;
 }
@@ -69,11 +71,11 @@ header {
 .navbar li a {
   font-size: 1.25rem;
   text-decoration: none;
-  color: black;
+  color: var(--color-text-dark);
 }
 
 .navbar li a:hover {
-  color: orangered;
+  color: var(--color-hover);
   transition: all 200ms;
 
 }
@@ -86,21 +88,22 @@ header {
   z-index: 1001;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
   padding: 0 2rem;
   transition: right 0.3 ease;
 }
 
-.navbar-auth a {
-  padding: 10px 1px;
-  background: orangered;
+.navbar-login,
+.navbar-register {
+  padding: 10px;
   width: auto;
   text-align: center;
-  border-radius: 0.25rem;
   text-decoration: none;
-  color: aliceblue;
-  font-size: 20px;
+  color: var(--color-dark);
+  font-size: 18px;
   font-weight: bold;
+
 }
 
 .navbar-auth.active {
@@ -111,7 +114,7 @@ header {
   position: fixed;
   inset: 0;
   z-index: 999;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: var(--color-overlay);
 
   opacity: 0;
   visibility: hidden;
@@ -127,12 +130,12 @@ header {
 }
 
 .fa-bars {
-  color: aliceblue;
+  color: var(--color-text);
 }
 
 .fa-bars:hover,
 .fa-x:hover {
-  color: orangered;
+  color: var(--coolr-text);
   transition: all 200ms;
   scale: 110%;
 
@@ -144,7 +147,7 @@ footer {
   margin-top: auto;
   align-items: center;
   justify-content: center;
-  color: rgba(240, 248, 255, 0.589);
+  color: var(--color-text-muted)
 }
 
 @media (min-width: 768px) {
@@ -169,7 +172,14 @@ footer {
     justify-content: space-between;
   }
 
-  .navbar, .navbar-auth {
+  .navbar li a {
+    font-size: 1.25rem;
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .navbar,
+  .navbar-auth {
     position: static;
     width: auto;
     height: auto;
@@ -180,11 +190,48 @@ footer {
     transition: none;
   }
 
-  .navbar-auth a {
-    padding: 0.5rem 1rem;
+  .navbar-login {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.1rem;
+    background-color: none;
+    color: var(--color-text);
+    text-decoration: none;
+    border: 2px solid var(--color-surface);
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+
+    transition: background-color 200ms ease;
   }
 
-  .navbar li a {
-    color: white;
+  .navbar-login:hover {
+    background-color: var(--color-overlay);
+    border: 2px solid transparent;
+  }
+
+  .navbar-login:active {
+    background-color: var(--color-overlay);
+    border: 2px solid white;
+  }
+
+  .navbar-register {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.1rem;
+    background-color: var(--color-surface);
+    color: var(--color-text-dark);
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+
+    transition: background-color 200ms ease;
+  }
+
+  .navbar-register:hover {
+    background-color: var(--color-secondary);
   }
 }

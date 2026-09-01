@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ShortyLink {% block title %}{% endblock title %}</title>
 
+    <link rel="stylesheet" href="{% static 'shortener/css/variables.css'}">
     <link rel="stylesheet" href="{% static 'shortener/css/base.css' %}" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     <link
@@ -33,8 +34,8 @@
           <li><a href="#">Pricing</a></li>
         </ul>
         <div class="navbar-auth">
-          <a href="#">Sign in</a>
-          <a href="#">Get started</a>
+          <a href="#" class="navbar-login">Log in</a>
+          <a href="#" class="navbar-register">Get started</a>
         </div>
       </nav>
     </header>
