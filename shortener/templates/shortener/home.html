@@ -1,34 +1,129 @@
-{% extends "shortener/base.html" %}
-{% load static %}
-
-{% block title %}- Home {% endblock title %}
-
-{% block head %}
-<link rel="stylesheet" href="{% static 'shortener/css/home.css' %}">
-{% endblock head %}
-
-{% block content %}
-
-<section class="shorty-container">
+{% extends "shortener/base.html" %} {% load static %}
+{% block title %}- Home {%endblock title %} {% block head %}
+<link rel="stylesheet" href="{% static 'shortener/css/home.css' %}" />
+{% endblock head %} {% block content %}
+<section class="hero-container">
   <div class="hero-text">
-    <h1>Shrink Your Links, Share Instantly</h1>
-    <p>Transform long URLs into clean, clickable links in seconds</p>
+    <h1>Your Links, Shorter and Smarter</h1>
+
+    <p class="hero-main-desc">
+      Create short, shareable links in seconds. Just paste your long URL,
+      shorten it, and share it anywhere.
+    </p>
+
+    <p class="hero-support desktop-only">
+      From social bios to business campaigns, give every destination a link
+      people will want to click.
+    </p>
+
+    <span class="hero-eyebrow desktop-only"
+      >SHORTY LINK · MADE FOR SHARING</span
+    >
+
+    <div class="hero-promise">
+      <span>Free to use</span>
+      <span>Instant results</span>
+      <span class="desktop-only">No sign-up needed</span>
+    </div>
+
+    <a class="hero-cta desktop-only" href="#form-input">
+      Start shortening for free <span aria-hidden="true">&#8594;</span>
+    </a>
   </div>
 
   <div class="form-container">
     <form action="{% url 'shorten_link' %}" method="post" id="shorty-form">
+      <section class="form-header">
+        <h3>Shorten a Long URL</h3>
+        <p>No credit card or registration required</p>
+      </section>
       {% csrf_token %}
       <div class="form-wrapper">
-        <input type="url" id="form-input" placeholder="Paste URL, short and share" required>
-        <button type="submit">Shorten link</button>
+        <div class="input-container">
+          <label for="form-input" class="input-label"
+            >PASTE YOUR LONG LINK HERE</label
+          >
+          <input
+            type="url"
+            id="form-input"
+            name="url"
+            placeholder="https://example.com/very-long-link"
+            required
+          />
+        </div>
+
+        <button type="submit" class="form-btn">Get Your Short URL</button>
+      </div>
+      <div id="result-container">
+        <div id="result"></div>
       </div>
     </form>
-    <div id="result-container">
-      <div id="result"></div>
-    </div>
+  </div>
+</section>
+<section class="why-section" id="why-us">
+  <div class="why-header">
+    <span class="section-eyebrow">WHY SHORT LINKS?</span>
+    <h2>Make every link easier to share</h2>
+    <p>
+      Long URLs can be messy, difficult to remember, and annoying to share.
+      Shorty Link keeps them simple.
+    </p>
+  </div>
+
+  <div class="why-grid">
+    <article class="why-card">
+      <h3>Clean & Simple</h3>
+      <p>
+        Replace long and complicated URLs with short, clean links that look
+        better wherever you share them.
+      </p>
+    </article>
+
+    <article class="why-card">
+      <h3>Easy to Share</h3>
+      <p>
+        Perfect for messages, social media, emails, profiles, and anywhere else
+        you need to share a link.
+      </p>
+    </article>
+
+    <article class="why-card">
+      <h3>Created in Seconds</h3>
+      <p>
+        Paste your URL, shorten it, and you're ready to go. No complicated setup
+        required.
+      </p>
+    </article>
   </div>
 </section>
 
+<section class="how-section" id="how-it-works">
+  <div class="how-header">
+    <span class="section-eyebrow">HOW IT WORKS</span>
+    <h2>Three steps, no waiting</h2>
+    <p>No accounts, no setup. Paste a link and you're done in seconds.</p>
+  </div>
+
+  <div class="how-grid">
+    <article class="how-step">
+      <span class="how-step-number">1</span>
+      <h3>Paste your link</h3>
+      <p>Drop in any URL, no matter how long or messy it is.</p>
+    </article>
+
+    <article class="how-step">
+      <span class="how-step-number">2</span>
+      <h3>Get a short link</h3>
+      <p>We generate a clean, shareable link instantly.</p>
+    </article>
+
+    <article class="how-step">
+      <span class="how-step-number">3</span>
+      <h3>Share it anywhere</h3>
+      <p>Use it in bios, messages, emails, or campaigns.</p>
+    </article>
+  </div>
+</section>
 
 <script src="{% static 'shortener/js/formSubmit.js' %}" defer></script>
 {% endblock content %}
