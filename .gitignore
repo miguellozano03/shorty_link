@@ -17,9 +17,6 @@ env/
 *.db
 *.sqlite3
 
-# Migrations
-migrations/
-
 # Pytest cache
 .pytest_cache/
 

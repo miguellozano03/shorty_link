@@ -1,34 +1,65 @@
-{% extends "shortener/base.html" %}
-{% load static %}
+{% extends "shortener/base.html" %} 
+{% load static %} 
 
-{% block title %}- Home {% endblock title %}
+{% block title %}- Home{% endblock title %} 
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'shortener/css/home.css' %}">
-{% endblock head %}
+<link rel="stylesheet" href="{% static 'shortener/css/home.css' %}" />
+{% endblock head %} 
 
 {% block content %}
-
-<section class="shorty-container">
+<section class="hero-container">
   <div class="hero-text">
-    <h1>Shrink Your Links, Share Instantly</h1>
-    <p>Transform long URLs into clean, clickable links in seconds</p>
+    <h1>Your Links, Shorter and Smarter</h1>
+    
+    <p class="hero-main-desc">
+      Create short, shareable links in seconds. Just paste your long URL, shorten it, and share it anywhere.
+    </p>
+
+    <p class="hero-support desktop-only">
+      From social bios to business campaigns, give every destination a link people will want to click.
+    </p>
+    
+    <span class="hero-eyebrow desktop-only">SHORTY LINK · MADE FOR SHARING</span>
+
+    <div class="hero-promise">
+      <span>Free to use</span>
+      <span>Instant results</span>
+      <span class="desktop-only">No sign-up needed</span>
+    </div>
+
+    <a class="hero-cta desktop-only" href="#form-input">
+      Start shortening for free <span aria-hidden="true">&#8594;</span>
+    </a>
   </div>
 
   <div class="form-container">
     <form action="{% url 'shorten_link' %}" method="post" id="shorty-form">
+      <section class="form-header">
+        <h3>Shorten a Long URL</h3>
+        <p>No credit card or registration required</p>
+      </section>
       {% csrf_token %}
       <div class="form-wrapper">
-        <input type="url" id="form-input" placeholder="Paste URL, short and share" required>
-        <button type="submit">Shorten link</button>
+        <div class="input-container">
+          <label for="form-input" class="input-label">PASTE YOUR LONG LINK HERE</label>
+          <input
+            type="url"
+            id="form-input"
+            name="url"
+            placeholder="https://example.com/very-long-link"
+            required
+          />
+        </div>
+
+        <button type="submit" class="form-btn">Get Your Short URL</button>
+      </div>
+      <div id="result-container">
+        <div id="result"></div>
       </div>
     </form>
-    <div id="result-container">
-      <div id="result"></div>
-    </div>
   </div>
 </section>
-
 
 <script src="{% static 'shortener/js/formSubmit.js' %}" defer></script>
 {% endblock content %}
