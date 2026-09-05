@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ? `Error: ${data.error}`
       : `
         <a href="${data.short_url}" target="_blank">${data.short_url}</a>
-        <button type="button" id="copy-btn">Copy</button>
+        <button type="button" id="copy-btn"><i class="fa-regular fa-clipboard"></i></button>
       `;
 
     const resultContainer = document.getElementById("result-container");
@@ -43,12 +43,17 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("click", async (e) => {
-  if (e.target.id === "copy-btn") {
-    const link = document.querySelector("#result a").textContent;
+  const button = e.target.closest("#copy-btn");
 
-    await navigator.clipboard.writeText(link);
+  if (!button) return;
 
-    e.target.textContent = "Copied!";
-    setTimeout(() => (e.target.textContent = "Copy"), 1500);
-  }
+  const link = document.querySelector("#result a").textContent;
+
+  await navigator.clipboard.writeText(link);
+
+  button.textContent = "Copied!";
+
+  setTimeout(() => {
+    button.innerHTML = '<i class="fa-regular fa-clipboard"></i>';
+  }, 1500);
 });
