@@ -45,10 +45,10 @@ INSTALLED_APPS = [
     'shortener',
 ]
 
-if DEBUG:
-  INSTALLED_APPS += [
-    'django_browser_reload',
-  ]
+# if DEBUG:
+#   INSTALLED_APPS += [
+#     'django_browser_reload',
+#   ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -62,11 +62,11 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-if DEBUG:
-  MIDDLEWARE += [
-    'django_browser_reload.middleware.BrowserReloadMiddleware'
+# if DEBUG:
+#   MIDDLEWARE += [
+#     'django_browser_reload.middleware.BrowserReloadMiddleware'
 
-  ]
+#   ]
 
 ROOT_URLCONF = 'shorty_link.urls'
 
