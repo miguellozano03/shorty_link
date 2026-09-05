@@ -60,8 +60,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django_browser_reload.middleware.BrowserReloadMiddleware'
 ]
+
+if DEBUG:
+  MIDDLEWARE += [
+    'django_browser_reload.middleware.BrowserReloadMiddleware'
+
+  ]
 
 ROOT_URLCONF = 'shorty_link.urls'
 
