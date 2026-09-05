@@ -42,10 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-
-    'django_browser_reload',
     'shortener',
 ]
+
+if DEBUG:
+  INSTALLED_APPS += [
+    'django_browser_reload',
+  ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,8 +60,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django_browser_reload.middleware.BrowserReloadMiddleware'
 ]
+
+if DEBUG:
+  MIDDLEWARE += [
+    'django_browser_reload.middleware.BrowserReloadMiddleware'
+
+  ]
 
 ROOT_URLCONF = 'shorty_link.urls'
 
@@ -72,6 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.debug',
             ],
         },
     },
