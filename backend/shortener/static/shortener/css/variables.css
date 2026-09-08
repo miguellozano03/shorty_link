@@ -1,0 +1,24 @@
+/* variables.css */
+:root {
+  /* Brand */
+  --color-primary: #ff6b4a;
+  --color-secondary: #38bfc4;
+
+  /* Backgrounds */
+  --color-background: #f1f4ef;
+  --color-surface: #ffffff;
+  --color-dark: #0d1b2a;
+  --color-ink-raised: #16283a;
+
+  /* Text */
+  --color-text: #f7f5f1;
+  --color-text-dark: #10202c;
+  --color-text-muted: rgba(247, 245, 241, 0.6);
+
+  /* UI */
+  --color-overlay: rgba(13, 27, 42, 0.72);
+  --color-border: #dee5da;
+
+  /* States */
+  --color-hover: #e14f30;
+}
