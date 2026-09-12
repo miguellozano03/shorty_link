@@ -19,10 +19,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from shortener import urls
+from shorty_link.api.v1.api import api
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(urls)),
+    path('api/v1/', api.urls)
     
 ]
 
