@@ -1,9 +1,12 @@
-from ninja import Router, Schema
 from datetime import datetime, timedelta, timezone
 
-from accounts.services import UserService, TokenService, SesionService
-from .schemas import CredentialsSchema, AuthResponse, ErrorResponse, RefreshSchema, LogoutAllSchema
 from django.conf import settings
+from ninja import Router
+
+from accounts.services import UserService, TokenService, SesionService
+from accounts.exceptions import SessionNotFoundError
+from .schemas import CredentialsSchema, AuthResponse, ErrorResponse, RefreshSchema, LogoutAllSchema
+
 
 router = Router(tags=["Auth"])
 
@@ -46,13 +49,16 @@ def register(request, data: CredentialsSchema):
 @router.post("/refresh", response={200: AuthResponse, 400: ErrorResponse})
 def refresh(request, data: RefreshSchema):
     payload = token_service.verify(data.refresh_token)
-    session = session_service.get_by_token(data.refresh_token)
-
-    if session is None:
+    
+    try:
+        session = session_service.get(
+            plain_token=data.refresh_token
+        )
+    except SessionNotFoundError:
         return 400, {"detail": "Invalid or revoked refresh token"}
 
     user = session.user
-    session_service.revoke(session)
+    session_service.revoke(session=session)
 
     access_token = token_service.create_access_token(user.id)
     refresh_token = token_service.create_refresh_token(user.id)
@@ -71,17 +77,17 @@ def refresh(request, data: RefreshSchema):
 
 @router.post("/logout", response={200: dict, 400: ErrorResponse})
 def logout(request, data: RefreshSchema):
-    session = session_service.get_by_token(data.refresh_token)
+    session = session_service.get(plain_token=data.refresh_token)
     if session is None:
         return 400, {"detail": "Invalid or revoked refresh token"}
 
-    session_service.revoke(session)
+    session_service.revoke(session=session)
     return 200, {"detail": "Logged out"}
 
 
 @router.post("/logout_all", response={200: dict})
 def logout_all(request, data: LogoutAllSchema):
-    session_service.revoke_all(data.user_id)
+    session_service.revoke_all(user=data.user_id)
     return 200, {"detail": "All sessions revoked"}
 
 
