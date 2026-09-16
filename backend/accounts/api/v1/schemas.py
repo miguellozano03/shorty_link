@@ -21,6 +21,7 @@ class UserResponse(BaseModel):
 class AuthResponse(BaseModel):
     user: UserResponse
     access_token: str
+    refresh_token: str
     token_type: str
 
 

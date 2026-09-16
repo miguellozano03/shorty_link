@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.password_validation import validate_password as django_validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
-from .exceptions import UserAlreadyExistsError, ValidationError, InvalidPasswordError, InvalidCredentialsError
+from accounts.exceptions import UserAlreadyExistsError, ValidationError, InvalidPasswordError, InvalidCredentialsError
 
 User = get_user_model()
 

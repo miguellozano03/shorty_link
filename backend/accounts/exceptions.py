@@ -6,6 +6,9 @@ class InvalidCredentialsError(Exception):
     pass
 
 
+class SessionNotFoundError(Exception):
+    pass
+
 class InvalidPasswordError(Exception):
     def __init__(self, messages=None):
         self.messages = messages or ["Invalid password"]

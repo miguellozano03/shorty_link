@@ -41,3 +41,17 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
     
     objects = UserManager()
+
+class Session(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='sessions',
+    )
+    token_hash = models.CharField(max_length=255, unique=True)
+    expires_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    revoked_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'sessions'

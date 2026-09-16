@@ -154,3 +154,11 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# JWT Authentication
+
+ALGORITHM = os.environ.get('ALGORITHM', 'HS256')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+ACCESS_TTL = int(os.environ.get('ACCESS_TTL', 15))
+REFRESH_TTL = int(os.environ.get('REFRESH_TTL', 7))
