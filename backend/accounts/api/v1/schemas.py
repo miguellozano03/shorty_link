@@ -28,3 +28,11 @@ class AuthResponse(BaseModel):
 class ErrorResponse(BaseModel):
     detail: str
     errors: list = None
+
+
+class RefreshSchema(BaseModel):
+    refresh_token: str
+
+
+class LogoutAllSchema(BaseModel):
+    user_id: int

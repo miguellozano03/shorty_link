@@ -1,8 +1,8 @@
-from ninja import Router
+from ninja import Router, Schema
 from datetime import datetime, timedelta, timezone
 
 from accounts.services import UserService, TokenService, SesionService
-from .schemas import CredentialsSchema, UserResponse, AuthResponse, ErrorResponse
+from .schemas import CredentialsSchema, AuthResponse, ErrorResponse, RefreshSchema, LogoutAllSchema
 from django.conf import settings
 
 router = Router(tags=["Auth"])
@@ -27,7 +27,9 @@ def register(request, data: CredentialsSchema):
     access_token = token_service.create_access_token(user.id)
     refresh_token = token_service.create_refresh_token(user.id)
     
-    expires_at = token_service.verify(refresh_token)["exp"]
+    expires_at = datetime.fromtimestamp(
+        token_service.verify(refresh_token)["exp"], tz=timezone.utc
+    )
     session_service.create(plain_token=refresh_token, user=user, expires_at=expires_at)
 
     return 200, {
@@ -39,6 +41,48 @@ def register(request, data: CredentialsSchema):
         "refresh_token": refresh_token,
         "token_type": "bearer",
     }
+
+
+@router.post("/refresh", response={200: AuthResponse, 400: ErrorResponse})
+def refresh(request, data: RefreshSchema):
+    payload = token_service.verify(data.refresh_token)
+    session = session_service.get_by_token(data.refresh_token)
+
+    if session is None:
+        return 400, {"detail": "Invalid or revoked refresh token"}
+
+    user = session.user
+    session_service.revoke(session)
+
+    access_token = token_service.create_access_token(user.id)
+    refresh_token = token_service.create_refresh_token(user.id)
+    expires_at = datetime.fromtimestamp(
+        token_service.verify(refresh_token)["exp"], tz=timezone.utc
+    )
+    session_service.create(plain_token=refresh_token, user=user, expires_at=expires_at)
+
+    return 200, {
+        "user": {"id": user.id, "email": user.email},
+        "access_token": access_token,
+        "refresh_token": refresh_token,
+        "token_type": "bearer",
+    }
+
+
+@router.post("/logout", response={200: dict, 400: ErrorResponse})
+def logout(request, data: RefreshSchema):
+    session = session_service.get_by_token(data.refresh_token)
+    if session is None:
+        return 400, {"detail": "Invalid or revoked refresh token"}
+
+    session_service.revoke(session)
+    return 200, {"detail": "Logged out"}
+
+
+@router.post("/logout_all", response={200: dict})
+def logout_all(request, data: LogoutAllSchema):
+    session_service.revoke_all(data.user_id)
+    return 200, {"detail": "All sessions revoked"}
 
 
 @router.post("/login", response={200: AuthResponse,400: ErrorResponse})
