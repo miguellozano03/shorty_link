@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'corsheaders',
+
     'shortener',
     'accounts'
 ]
@@ -61,6 +63,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 # if DEBUG:
@@ -162,3 +166,7 @@ ALGORITHM = os.environ.get('ALGORITHM', 'HS256')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 ACCESS_TTL = int(os.environ.get('ACCESS_TTL', 15))
 REFRESH_TTL = int(os.environ.get('REFRESH_TTL', 7))
+
+
+# CORS
+CORS_ALLOW_ALL_ORIGINS = True

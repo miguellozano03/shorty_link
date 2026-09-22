@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { reactive } from 'vue'
 import { AuthButton, SocialLoginButton } from '@/components/ui/Buttons'
 import { FormInput } from '@/components/ui/Inputs'
 import { GoogleIcon, GithubIcon, DiscordIcon } from '@/assets/icons'
+
+import { authService } from '@/services/authService'
 
 interface socialItem {
   name: string
@@ -22,6 +25,25 @@ const socialNetworks: socialItem[] = [
     icon: DiscordIcon,
   },
 ]
+
+const registerData = reactive({
+  name: '',
+  email: '',
+  password: '',
+  birthdate: '',
+})
+
+const handleSubmit = async () => {
+  console.log('Datos enviados', registerData)
+
+  try {
+    const result = await authService.register(registerData)
+
+    console.log('Response', result)
+  } catch (error) {
+    console.error(error);
+  }
+}
 </script>
 
 <template>
@@ -35,27 +57,33 @@ const socialNetworks: socialItem[] = [
       <div class="flex flex-col gap-10 pt-5">
         <div>
           <h2 class="text-2xl font-bold">Create your account</h2>
-          <p>Already have an account? <RouterLink to="/login" class="text-blue-700 underline">Log in</RouterLink></p>
+          <p>
+            Already have an account?
+            <RouterLink to="/login" class="text-blue-700 underline">Log in</RouterLink>
+          </p>
         </div>
 
-        <form action="" class="flex flex-col gap-4">
+        <form @submit.prevent="handleSubmit" class="flex flex-col gap-4">
           <div class="flex flex-col gap-4">
-            <FormInput label="Name" type="text" id="name_register" />
+            <FormInput v-model.trim="registerData.name" label="Name" type="text" id="name_register" />
 
-            <FormInput label="Email" type="email" id="email_register" />
+            <FormInput v-model.trim="registerData.email" label="Email" type="email" id="email_register" />
 
-            <FormInput label="Password" type="password" id="password_register" />
+            <FormInput v-model.trim="registerData.password" label="Password" type="password" id="password_register" />
 
             <div>
               <label for="birthdate_register" class="block text-sm font-medium text-gray-700 mb-1">
                 Date of Birth
               </label>
               <input
+                v-model="registerData.birthdate"
                 type="date"
                 id="birthdate_register"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <p class="text-xs text-gray-500 mt-1">You must be at least 14 years old to register</p>
+              <p class="text-xs text-gray-500 mt-1">
+                You must be at least 14 years old to register
+              </p>
             </div>
           </div>
 
@@ -81,7 +109,9 @@ const socialNetworks: socialItem[] = [
     </div>
 
     <!-- Right Column: Image/Background (Desktop Only) -->
-    <div class="hidden lg:flex items-center justify-center bg-gradient-to-br from-olive-100 to-olive-200 p-8">
+    <div
+      class="hidden lg:flex items-center justify-center bg-gradient-to-br from-olive-100 to-olive-200 p-8"
+    >
       <div class="text-center">
         <h2 class="text-3xl font-bold text-gray-800 mb-4">Join Us Today</h2>
         <p class="text-gray-600 text-lg max-w-sm">

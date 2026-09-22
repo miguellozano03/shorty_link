@@ -1,5 +1,5 @@
 import hashlib
-from datetime import timedelta
+from datetime import date, timedelta
 
 from django.test import TestCase
 from django.db import IntegrityError
@@ -16,12 +16,16 @@ class SessionServiceTest(TestCase):
     def setUp(self):
         self.session_service = SesionService()
         self.user = User.objects.create_user(
+            name="Test User",
             email="test@example.com",
             password="SuperSecret123!",
+            birthdate=date(1990, 1, 1),
         )
         self.other_user = User.objects.create_user(
+            name="Other User",
             email="other@example.com",
             password="SuperSecret123!",
+            birthdate=date(1991, 1, 1),
         )
         self.expires_at = timezone.now() + timedelta(days=1)
 

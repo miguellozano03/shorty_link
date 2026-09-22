@@ -5,7 +5,7 @@ from ninja import Router
 
 from accounts.services import UserService, TokenService, SesionService
 from accounts.exceptions import SessionNotFoundError
-from .schemas import CredentialsSchema, AuthResponse, ErrorResponse, RefreshSchema, LogoutAllSchema
+from .schemas import CredentialsSchema, AuthResponse, ErrorResponse, RefreshSchema, LogoutAllSchema, RegisterSchema
 
 
 router = Router(tags=["Auth"])
@@ -19,26 +19,59 @@ token_service = TokenService(
 
 session_service = SesionService()
 
-
-@router.post("/register", response={200: AuthResponse,400: ErrorResponse,409: ErrorResponse})
-def register(request, data: CredentialsSchema):
-    user = UserService.register(
+@router.post("/login", response={200: AuthResponse,400: ErrorResponse})
+def login(request, data: CredentialsSchema):
+    user = UserService.login(
         email=data.email,
         password=data.password,
     )
-
     access_token = token_service.create_access_token(user.id)
     refresh_token = token_service.create_refresh_token(user.id)
-    
-    expires_at = datetime.fromtimestamp(
-        token_service.verify(refresh_token)["exp"], tz=timezone.utc
-    )
+
+    payload = token_service.verify(refresh_token)
+    expires_at = datetime.fromtimestamp(payload["exp"], tz=timezone.utc)
     session_service.create(plain_token=refresh_token, user=user, expires_at=expires_at)
 
     return 200, {
         "user": {
             "id": user.id,
             "email": user.email,
+        },
+        "access_token": access_token,
+        "refresh_token": refresh_token,
+        "token_type": "bearer",
+    }
+
+@router.post("/register",response={ 200: AuthResponse, 400: ErrorResponse, 409: ErrorResponse})
+def register(request, data: RegisterSchema):
+
+    user = UserService.register(
+        name=data.name,
+        email=data.email,
+        password=data.password,
+        birthdate=data.birthdate,
+    )
+
+    access_token = token_service.create_access_token(user.id)
+    refresh_token = token_service.create_refresh_token(user.id)
+
+    expires_at = datetime.fromtimestamp(
+        token_service.verify(refresh_token)["exp"],
+        tz=timezone.utc,
+    )
+
+    session_service.create(
+        plain_token=refresh_token,
+        user=user,
+        expires_at=expires_at,
+    )
+
+    return 200, {
+        "user": {
+            "id": user.id,
+            "email": user.email,
+            "name": user.name,
+            "birthdate": user.birthdate,
         },
         "access_token": access_token,
         "refresh_token": refresh_token,
@@ -89,29 +122,4 @@ def logout(request, data: RefreshSchema):
 def logout_all(request, data: LogoutAllSchema):
     session_service.revoke_all(user=data.user_id)
     return 200, {"detail": "All sessions revoked"}
-
-
-@router.post("/login", response={200: AuthResponse,400: ErrorResponse})
-def login(request, data: CredentialsSchema):
-    user = UserService.login(
-        email=data.email,
-        password=data.password,
-    )
-    access_token = token_service.create_access_token(user.id)
-    refresh_token = token_service.create_refresh_token(user.id)
-
-    payload = token_service.verify(refresh_token)
-    expires_at = datetime.fromtimestamp(payload["exp"], tz=timezone.utc)
-    session_service.create(plain_token=refresh_token, user=user, expires_at=expires_at)
-
-    return 200, {
-        "user": {
-            "id": user.id,
-            "email": user.email,
-        },
-        "access_token": access_token,
-        "refresh_token": refresh_token,
-        "token_type": "bearer",
-    }
-
 
