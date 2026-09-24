@@ -1,11 +1,59 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import DashboardView from '@/views/DashboardView.vue'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import {
+  Analytics,
+  DashboardLayout,
+  Home,
+  Links,
+  Settings,
+  Subscriptions,
+} from '@/views/Dashboard'
 import { LoginView, RegisterView } from '@/views/Auth'
 
-const routes = [
-  { path: '/', component: DashboardView },
-  { path: '/login', component: LoginView, name: 'Login', meta: { title: 'Welcome back!' } },
-  { path: '/register', component: RegisterView, name: 'Register', meta: { title: 'Create a new account' } },
+const routes: RouteRecordRaw[] = [
+  {
+    path: '/',
+    component: DashboardLayout,
+    meta: { title: 'ShortyLink | Dashboard' },
+    children: [
+      {
+        path: '',
+        name: 'home',
+        component: Home,
+      },
+      {
+        path: 'links',
+        name: 'links',
+        component: Links,
+      },
+      {
+        path: 'analytics',
+        name: 'analytics',
+        component: Analytics,
+      },
+      {
+        path: 'subscriptions',
+        name: 'subscriptions',
+        component: Subscriptions,
+      },
+      {
+        path: 'settings',
+        name: 'settings',
+        component: Settings,
+      },
+    ],
+  },
+  {
+    path: '/login',
+    component: LoginView,
+    name: 'Login',
+    meta: { title: 'Welcome back!' },
+  },
+  {
+    path: '/register',
+    component: RegisterView,
+    name: 'Register',
+    meta: { title: 'Create a new account' },
+  },
 ]
 
 const router = createRouter({
