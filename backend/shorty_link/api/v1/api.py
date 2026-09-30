@@ -1,5 +1,6 @@
 from ninja import NinjaAPI
 from accounts.api.v1.api import router as accounts_router
+from shortener.api.v1.api import router as shortener_router
 from accounts.exceptions import (
     UserAlreadyExistsError,
     InvalidPasswordError,
@@ -77,3 +78,4 @@ api.add_exception_handler(
 )
 
 api.add_router("/auth", accounts_router)
+api.add_router("/shortener", shortener_router)

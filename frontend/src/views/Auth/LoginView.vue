@@ -5,6 +5,7 @@ import { FormInput } from '@/components/ui/Inputs'
 import { GoogleIcon, GithubIcon, DiscordIcon } from '@/assets/icons'
 
 import { authService } from '@/services/authService'
+import { useRouter } from 'vue-router'
 
 interface socialItem {
   name: string
@@ -31,14 +32,14 @@ const loginData = reactive({
   password: '',
 })
 
+const router = useRouter()
+
 const handleSubmit = async () => {
-  console.log('Datos enviados', loginData)
-
   try {
-    const result = await authService.login(loginData)
-
-    console.log('Respuesta:', result)
+    await authService.login(loginData)
+    await router.replace('/')
   } catch (error) {
+    alert('Invalid credentials')
     console.error('Error:', error)
   }
 }

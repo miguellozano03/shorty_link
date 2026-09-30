@@ -1,12 +1,6 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
-import {
-  Analytics,
-  DashboardLayout,
-  Home,
-  Links,
-  Settings,
-  Subscriptions,
-} from '@/views/Dashboard'
+import { Analytics, DashboardLayout, Home, Links, Settings, Subscriptions } from '@/views/Dashboard'
+import { CreateLink, EditLink } from '@/views/Dashboard/Links'
 import { LoginView, RegisterView } from '@/views/Auth'
 
 const routes: RouteRecordRaw[] = [
@@ -24,6 +18,21 @@ const routes: RouteRecordRaw[] = [
         path: 'links',
         name: 'links',
         component: Links,
+
+        meta: { title: 'ShortyLink | Links' },
+      },
+      {
+        path: 'links/new',
+        name: 'newLink',
+        component: CreateLink,
+
+        meta: { title: 'ShortyLink | Links' },
+      },
+      {
+        path: 'links/:code/edit',
+        name: 'editLink',
+        component: EditLink,
+        meta: { title: 'Edit link | ShortyLink' },
       },
       {
         path: 'analytics',

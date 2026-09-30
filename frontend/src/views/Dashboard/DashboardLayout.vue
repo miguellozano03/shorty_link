@@ -5,7 +5,7 @@ import { Sidebar } from '@/components/layout/Dashboard'
   <div class="flex min-h-screen w-full">
     <Sidebar />
 
-    <main class="flex-1 p-6">
+    <main class="flex-1">
       <RouterView />
     </main>
   </div>
