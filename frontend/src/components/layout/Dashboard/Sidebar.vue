@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import NavItem from '@/components/ui/Navbar/NavItem.vue'
-import { House, Link, ChartColumn, Settings, CreditCard } from '@lucide/vue'
+import { House, Link, ChartColumn, Settings, CreditCard, LogOut } from '@lucide/vue'
 import type { Component } from 'vue'
+import { useRouter } from 'vue-router'
+import { authService } from '@/services/authService'
 
 interface NavLink {
   link: string
@@ -19,6 +21,15 @@ const bottonNavItems: NavLink[] = [
   { link: '/subscriptions', text: 'Subscriptions', icon: CreditCard },
   { link: '/settings', text: 'Configuration', icon: Settings },
 ]
+
+const router = useRouter()
+
+async function logout() {
+  const refreshToken = localStorage.getItem('refresh_token')
+
+  await authService.logout(refreshToken).catch(() => undefined)
+  await router.push('/login')
+}
 </script>
 <template>
   <aside class="flex flex-col h-screen w-3xs gap-5">
@@ -47,6 +58,14 @@ const bottonNavItems: NavLink[] = [
           :text="item.text"
           :icon="item.icon"
         />
+        <button
+          class="relative flex w-full items-center justify-start gap-2 py-2 pl-3 pr-2 text-left text-sm font-bold text-gray-900 hover:bg-gray-100"
+          type="button"
+          @click="logout"
+        >
+          <LogOut class="h-5 w-5 shrink-0" />
+          <span>Logout</span>
+        </button>
       </div>
     </div>
   </aside>

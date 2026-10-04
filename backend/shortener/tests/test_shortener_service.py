@@ -63,7 +63,10 @@ class ShortenerServiceTests(TestCase):
         self.assertIs(result, expected)
         generate_code.assert_called_once_with()
         create.assert_called_once_with(
-            long_url="https://example.com", code="abc123", user=self.user
+            title=None,
+            long_url="https://example.com",
+            code="abc123",
+            user=self.user,
         )
 
     @patch("shortener.services.shortener_service.Url.objects.create")
@@ -82,8 +85,18 @@ class ShortenerServiceTests(TestCase):
         self.assertEqual(
             create.call_args_list,
             [
-                call(long_url="https://example.com", code="duplicate", user=None),
-                call(long_url="https://example.com", code="unique", user=None),
+                call(
+                    title=None,
+                    long_url="https://example.com",
+                    code="duplicate",
+                    user=None,
+                ),
+                call(
+                    title=None,
+                    long_url="https://example.com",
+                    code="unique",
+                    user=None,
+                ),
             ],
         )
 

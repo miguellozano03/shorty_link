@@ -7,7 +7,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: DashboardLayout,
-    meta: { title: 'ShortyLink | Dashboard' },
+    meta: { title: 'ShortyLink | Dashboard', requiresAuth: true },
     children: [
       {
         path: '',
@@ -55,13 +55,13 @@ const routes: RouteRecordRaw[] = [
     path: '/login',
     component: LoginView,
     name: 'Login',
-    meta: { title: 'Welcome back!' },
+    meta: { title: 'Welcome back!', guestOnly: true },
   },
   {
     path: '/register',
     component: RegisterView,
     name: 'Register',
-    meta: { title: 'Create a new account' },
+    meta: { title: 'Create a new account', guestOnly: true },
   },
 ]
 
@@ -72,9 +72,18 @@ const router = createRouter({
 
 const defaultTitle = 'Shorty Link'
 
-router.beforeEach((to, _from, next) => {
+router.beforeEach((to) => {
   document.title = (to.meta.title as string) || defaultTitle
-  next()
+
+  const token = localStorage.getItem('access_token')
+
+  if (to.meta.requiresAuth && !token) {
+    return '/login'
+  }
+
+  if (to.meta.guestOnly && token) {
+    return '/'
+  }
 })
 
 export default router

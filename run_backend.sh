@@ -2,4 +2,4 @@
 
 cd backend
 source venv/bin/activate
-python manage.py runserver
+granian shorty_link.asgi:application --interface asgi

@@ -15,7 +15,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-# from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from shortener import urls
@@ -27,6 +26,3 @@ urlpatterns = [
     path('api/v1/', api.urls)
     
 ]
-
-# if settings.DEBUG:
-#     path("__reload__/", include("django_browser_reload.urls"))

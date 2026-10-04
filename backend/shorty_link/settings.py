@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-dev-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('HOSTS', '*').split(',')
+ALLOWED_HOSTS = os.environ.get('HOSTS', '').split(',')
 
 
 # Application definition
@@ -48,10 +48,6 @@ INSTALLED_APPS = [
     'accounts'
 ]
 
-# if DEBUG:
-#   INSTALLED_APPS += [
-#     'django_browser_reload',
-#   ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,14 +60,8 @@ MIDDLEWARE = [
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
 ]
 
-# if DEBUG:
-#   MIDDLEWARE += [
-#     'django_browser_reload.middleware.BrowserReloadMiddleware'
-
-#   ]
 
 ROOT_URLCONF = 'shorty_link.urls'
 
@@ -163,10 +153,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # JWT Authentication
 
 ALGORITHM = os.environ.get('ALGORITHM', 'HS256')
-SECRET_KEY = os.environ.get('SECRET_KEY')
+JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
 ACCESS_TTL = int(os.environ.get('ACCESS_TTL', 15))
 REFRESH_TTL = int(os.environ.get('REFRESH_TTL', 7))
 
 
 # CORS
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
+
+
+SECURE_SSL_REDIRECT = os.getenv("SECURE_SSL_REDIRECT", "False").lower() == "true"
+SESSION_COOKIE_SECURE = os.getenv("SESSION_COOKIE_SECURE", "False").lower() == "true"
+CSRF_COOKIE_SECURE = os.getenv("CSRF_COOKIE_SECURE", "False").lower() == "true"
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

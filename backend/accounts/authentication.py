@@ -12,7 +12,7 @@ class JWTAuth(HttpBearer):
     def authenticate(self, request, token):
         token_service = TokenService(
             algorithm=settings.ALGORITHM,
-            secret_key=settings.SECRET_KEY,
+            secret_key=settings.JWT_SECRET_KEY,
             access_ttl=settings.ACCESS_TTL,
             refresh_ttl=settings.REFRESH_TTL
         )

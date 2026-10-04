@@ -37,16 +37,17 @@ export const authService = {
     return response
   },
 
-  async logout(refreshToken: string) {
-    const response = await api.post<void>('auth/logout', {
-      refresh_token: refreshToken,
-    } satisfies RefreshTokenRequest)
-
-
-    localStorage.removeItem('access_token')
-    localStorage.removeItem('refresh_token')
-
-    return response
+  async logout(refreshToken: string | null) {
+    try {
+      if (refreshToken) {
+        return await api.post<void>('auth/logout', {
+          refresh_token: refreshToken,
+        } satisfies RefreshTokenRequest)
+      }
+    } finally {
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('refresh_token')
+    }
   },
 
   logoutAll(userId: number) {

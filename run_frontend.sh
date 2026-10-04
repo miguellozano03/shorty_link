@@ -1,4 +1,5 @@
 #!/bin/bash
 
 cd frontend
-npm run dev
+npm run build
+npm run preview

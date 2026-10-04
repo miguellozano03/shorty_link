@@ -1,3 +1,4 @@
+from ninja.throttling import UserRateThrottle
 from ninja import Router
 
 from accounts.authentication import JWTAuth
@@ -5,7 +6,7 @@ from shortener.services.shortener_service import ShortenerService
 from .schemas import UrlCreateSchema, UrlSchema, UrlUpdateSchema
 
 auth = JWTAuth()
-router = Router(tags=["Shortener"])
+router = Router(tags=["Shortener"], throttle=UserRateThrottle(rate='60/m'))
 service = ShortenerService()
 
 

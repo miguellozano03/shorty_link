@@ -80,7 +80,8 @@ const handleSubmit = async () => {
           </div>
         </form>
       </div>
-      <div class="flex items-center gap-3 pt-5">
+      <!-- TODO: implement OAuth -->
+      <!-- <div class="flex items-center gap-3 pt-5">
         <div class="h-px flex-1 bg-gray-300"></div>
         <span class="text-sm text-gray-500">OR</span>
         <div class="h-px flex-1 bg-gray-300"></div>
@@ -93,7 +94,7 @@ const handleSubmit = async () => {
           :text="`Continue with ${social.name}`"
           :icon-path="social.icon"
         />
-      </div>
+      </div> -->
     </div>
 
     <!-- Right Column: Image/Background (Desktop Only) -->

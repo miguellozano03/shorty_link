@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta, timezone
 
+from ninja.throttling import AuthRateThrottle
 from django.conf import settings
 from ninja import Router
 
@@ -8,11 +9,11 @@ from accounts.exceptions import SessionNotFoundError
 from .schemas import CredentialsSchema, AuthResponse, ErrorResponse, RefreshSchema, LogoutAllSchema, RegisterSchema
 
 
-router = Router(tags=["Auth"])
+router = Router(tags=["Auth"], throttle=AuthRateThrottle(rate="5/m"))
 
 token_service = TokenService(
     algorithm=settings.ALGORITHM,
-    secret_key=settings.SECRET_KEY,
+    secret_key=settings.JWT_SECRET_KEY,
     access_ttl=timedelta(minutes=settings.ACCESS_TTL),
     refresh_ttl=timedelta(days=settings.REFRESH_TTL)
 )

@@ -41,7 +41,7 @@ const handleSubmit = async () => {
 
     console.log('Response', result)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 </script>
@@ -65,11 +65,26 @@ const handleSubmit = async () => {
 
         <form @submit.prevent="handleSubmit" class="flex flex-col gap-4">
           <div class="flex flex-col gap-4">
-            <FormInput v-model.trim="registerData.name" label="Name" type="text" id="name_register" />
+            <FormInput
+              v-model.trim="registerData.name"
+              label="Name"
+              type="text"
+              id="name_register"
+            />
 
-            <FormInput v-model.trim="registerData.email" label="Email" type="email" id="email_register" />
+            <FormInput
+              v-model.trim="registerData.email"
+              label="Email"
+              type="email"
+              id="email_register"
+            />
 
-            <FormInput v-model.trim="registerData.password" label="Password" type="password" id="password_register" />
+            <FormInput
+              v-model.trim="registerData.password"
+              label="Password"
+              type="password"
+              id="password_register"
+            />
 
             <div>
               <label for="birthdate_register" class="block text-sm font-medium text-gray-700 mb-1">
@@ -92,7 +107,8 @@ const handleSubmit = async () => {
           </div>
         </form>
       </div>
-      <div class="flex items-center gap-3 pt-5">
+      <!-- TODO: implement OAuth -->
+      <!-- <div class="flex items-center gap-3 pt-5">
         <div class="h-px flex-1 bg-gray-300"></div>
         <span class="text-sm text-gray-500">OR</span>
         <div class="h-px flex-1 bg-gray-300"></div>
@@ -105,7 +121,7 @@ const handleSubmit = async () => {
           :text="`Continue with ${social.name}`"
           :icon-path="social.icon"
         />
-      </div>
+      </div> -->
     </div>
 
     <!-- Right Column: Image/Background (Desktop Only) -->
