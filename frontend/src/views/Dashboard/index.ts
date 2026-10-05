@@ -1,0 +1,6 @@
+export { default as Home } from './Home.vue'
+export { default as DashboardLayout } from './DashboardLayout.vue'
+export { default as Links } from './Links.vue'
+export { default as Analytics } from './Analytics.vue'
+export { default as Subscriptions } from './Subscriptions.vue'
+export { default as Settings } from './Settings.vue'

@@ -1,64 +1,148 @@
-# Shorty.Link 🚀
+# Shorty Link
 
-Shorty.Link is a URL shortener service that allows you to shorten a URL without registration.
+Shorty Link is a URL shortener designed to turn long links into short, easy-to-share URLs. The project combines a backend with user authentication and a modern frontend to manage links, create quick access shortcuts, and maintain a user dashboard.
 
----
+## Short description
 
-## 🛠 Technologies
+The application allows:
 
-<span>
+- Registering and logging in users.
+- Creating, listing, editing, and deleting shortened URLs.
+- Generating short codes that redirect to the original URL.
+- Managing sessions and JWT tokens.
+- Accessing a web interface built with Vue to view and manage links.
 
-  ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) 
-  ![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white) 
-  ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white) 
-  ![Render](https://img.shields.io/badge/Render-ffffff?style=for-the-badge&logo=render&logoColor=black) 
-  ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) 
-  ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) 
-  ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+## Tech stack
 
-</span>
+### Backend
+- Python 3.12
+- Django 6.1
+- Django Ninja 1.7.0
+- PostgreSQL
+- JWT for authentication
+- CORS and WhiteNoise
+- Granian as the WSGI server
 
----
+The backend dependencies are defined in [backend/requirements.txt](backend/requirements.txt).
 
-## ⚡ Functionalities
+### Frontend
+- Vue 3
+- Vite
+- TypeScript
+- Vue Router
+- Tailwind CSS
+- ESLint + Vitest
 
-- Shorten URLs quickly and easily
-- Redirect to the original URL
-- Optional: Custom short links
-- Optional: Click statistics
+The frontend configuration is defined in [frontend/package.json](frontend/package.json).
 
----
+### Infrastructure
+- Docker
+- Docker Compose
 
-## 🚀 Installation
+## Project structure
 
+- [backend/](backend/) — API, models, authentication, services, migrations, and tests.
+- [frontend/](frontend/) — Vue application with routes, services, and components.
+- [docker-compose.yaml](docker-compose.yaml) — starts the backend and database.
+- [bruno/](bruno/) — API request collection for testing.
+
+## Requirements
+
+Before running the project, make sure you have installed:
+
+- Docker and Docker Compose
+- Node.js 22.18+ or 24.12+
+- npm
+- Python 3.12
+- PostgreSQL (if you want to run the database locally without Docker)
+
+## Environment variables
+
+The backend uses environment variables for Django, database, and JWT configuration. You can create a `.env` file inside `backend/` with values similar to the following:
+
+```env
+DJANGO_SECRET_KEY=your-secret-key
+DEBUG=True
+HOSTS=localhost,127.0.0.1
+DB_NAME=shorty_db
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_HOST=localhost
+DB_PORT=5432
+JWT_SECRET_KEY=your-jwt-secret
+ALGORITHM=HS256
+ACCESS_TTL=15
+REFRESH_TTL=7
+CORS_ALLOWED_ORIGINS=http://localhost:5173
+SECURE_SSL_REDIRECT=False
+SESSION_COOKIE_SECURE=False
+CSRF_COOKIE_SECURE=False
+```
+
+## How to run the project
+
+### Option 1: with Docker (recommended)
+
+From the project root:
 
 ```bash
-git clone https://github.com/tu-usuario/shorty-link.git
-cd shorty-link
+docker compose up --build
+```
+
+This will start:
+
+- Backend at: http://localhost:8000
+- PostgreSQL database in the `db` container
+
+### Option 2: backend locally
+
+```bash
+cd backend
 python -m venv venv
 source venv/bin/activate
-cd shorty_link
 pip install -r requirements.txt
 python manage.py migrate
-python manage.py runserver
+python manage.py runserver 0.0.0.0:8000
 ```
 
-**Note:** Create a database and configure the .env file:
+### Option 3: frontend locally
 
-```dotenv
-DJANGO_SECRET_KEY= 
-DEBUG=True
-HOSTS=
-
-#PREFIX FOR URL SHORTENER SERVICE
-PREFIX=localhost:8000
-
-#DATABASE CONFIG
-DB_NAME=
-DB_USER=
-DB_PASSWORD=
-DB_HOST=
-DB_PORT=
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
-Try the service [here](https://shorty-link.onrender.com/)
+The frontend will be available at:
+
+- http://localhost:5173
+
+## Useful commands
+
+### Frontend
+
+```bash
+cd frontend
+npm run build
+npm run test:unit
+npm run lint
+```
+
+### Backend
+
+```bash
+cd backend
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver 0.0.0.0:8000
+```
+
+## Additional notes
+
+- The backend uses `django-ninja` to build the API.
+- The project includes a Bruno API test collection in [bruno/](bruno/).
+- The frontend is built with Vue and Vite, while the backend is built with Django, so development can proceed independently in each part.
+
+## License
+
+This project is distributed under the license included in [LICENSE](LICENSE).

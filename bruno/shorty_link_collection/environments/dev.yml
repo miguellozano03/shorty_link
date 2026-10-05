@@ -1,0 +1,8 @@
+name: dev
+variables:
+  - name: baseUrl
+    value: http://127.0.0.1:8000
+  - name: access_token
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwidHlwZSI6ImFjY2VzcyIsImV4cCI6MTc5MTEyMjY5MCwiaWF0IjoxNzkxMTIxNzkwfQ.FDwtFnNeK9iHwP3rvQ2ZLglc31z3PMOlRLpafHIENYw
+  - name: refresh_token
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwidHlwZSI6InJlZnJlc2giLCJleHAiOjE3OTE3MjY1OTAsImlhdCI6MTc5MTEyMTc5MH0.oegKiTEbnGUBo7R2rSbyBX-bPE6skoAEFxvc3AoE6v4
